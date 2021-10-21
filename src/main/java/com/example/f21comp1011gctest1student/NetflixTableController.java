@@ -55,7 +55,7 @@ public class NetflixTableController implements Initializable {
         castCol.setCellValueFactory(new PropertyValueFactory<>("cast"));
 
         tableView.getItems().addAll(DBUtility.getNetflixData());
-        selectRatingComboBox.getItems().add("All ratings");
+        selectRatingComboBox.getItems().addAll(DBUtility.getCombos());
     }
 
     @FXML

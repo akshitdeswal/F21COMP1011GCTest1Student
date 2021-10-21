@@ -50,4 +50,30 @@ public class DBUtility {
         }
         return nfShow;
     }
+
+    public static ArrayList<String> getCombos(){
+        ArrayList<String> cRatings = new ArrayList<>();
+        String sql = "Select rating\n" +
+                    "from netflix \n" +
+                    "where showId in(Select max(showId) from netflix group by rating ) order by rating;";
+
+        try(
+                Connection conn = DriverManager.getConnection(connectUrl, user,pw);
+                Statement statement = conn.createStatement();
+                ResultSet resultSet = statement.executeQuery(sql);
+        )
+        {
+            while (resultSet.next())
+            {
+                cRatings.add(resultSet.getString(1));
+            }
+            cRatings.add("All ratings");
+
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return cRatings;
+
+    }
 }
