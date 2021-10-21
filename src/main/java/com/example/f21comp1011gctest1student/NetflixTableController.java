@@ -47,13 +47,15 @@ public class NetflixTableController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        movieCheckBox.setSelected(true);
+        tvCheckBox.setSelected(true);
+
         showIdCol.setCellValueFactory(new PropertyValueFactory<>("showId"));
         typeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
         titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
         ratingCol.setCellValueFactory(new PropertyValueFactory<>("rating"));
         directorCol.setCellValueFactory(new PropertyValueFactory<>("director"));
         castCol.setCellValueFactory(new PropertyValueFactory<>("cast"));
-
         tableView.getItems().addAll(DBUtility.getNetflixData());
         selectRatingComboBox.getItems().addAll(DBUtility.getCombos());
         numOfShowsLabel.setText(String.format("Number of movies/shows : %d", DBUtility.getCount()));
