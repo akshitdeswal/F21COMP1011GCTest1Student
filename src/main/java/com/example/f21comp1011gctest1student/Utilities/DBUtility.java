@@ -13,6 +13,29 @@ public class DBUtility {
     private static String pw = "student";
     private static String connectUrl = "jdbc:mysql://localhost:3306/javaTest";
 
+    public static int getCount(){
+        int count = 0;
+        String sql = "Select Count(*) from netflix;";
+
+        try(
+                Connection conn = DriverManager.getConnection(connectUrl, user,pw);
+                Statement statement = conn.createStatement();
+                ResultSet resultSet = statement.executeQuery(sql);
+        )
+        {
+            while (resultSet.next())
+            {
+            count = resultSet.getInt(1);
+            }
+
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return count;
+    }
+
     public static ArrayList<NetflixShow> getNetflixData()
     {
 

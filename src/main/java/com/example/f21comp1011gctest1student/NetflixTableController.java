@@ -56,6 +56,7 @@ public class NetflixTableController implements Initializable {
 
         tableView.getItems().addAll(DBUtility.getNetflixData());
         selectRatingComboBox.getItems().addAll(DBUtility.getCombos());
+        numOfShowsLabel.setText(String.format("Number of movies/shows : %d", DBUtility.getCount()));
     }
 
     @FXML
