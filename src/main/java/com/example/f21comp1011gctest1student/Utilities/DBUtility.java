@@ -99,4 +99,80 @@ public class DBUtility {
         return cRatings;
 
     }
+
+    public static ArrayList<NetflixShow> typeMovie(){
+        ArrayList<NetflixShow> nfShow = new ArrayList<>();
+
+        String sql = "Select * \n" +
+                "From netflix\n" +
+                "where `type` = 'Movie'\n" +
+                "order by showId;";
+
+        //try ensure that anything opened in the ( ... ) will be closed
+        try(
+                Connection conn = DriverManager.getConnection(connectUrl, user,pw);
+                Statement statement = conn.createStatement();
+                ResultSet resultSet = statement.executeQuery(sql);
+        )
+        {
+            while (resultSet.next())
+            {
+                String showId = resultSet.getString("showId");
+                String type = resultSet.getString("type");
+                String title = resultSet.getString("title");
+                String rating = resultSet.getString("rating");
+                String director = resultSet.getString("director");
+                String cast = resultSet.getString("cast");
+
+
+                NetflixShow netflixShow = new NetflixShow(showId,type,title,rating,director,cast);
+
+
+                nfShow.add(netflixShow);
+            }
+
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return nfShow;
+    }
+
+//    public static ArrayList<NetflixShow> typeTV(){
+//        ArrayList<NetflixShow> nfShow = new ArrayList<>();
+//
+//        String sql = "Select * \n" +
+//                "From netflix\n" +
+//                "where `type` = 'TV Show'\n" +
+//                "order by showId;";
+
+//        //try ensure that anything opened in the ( ... ) will be closed
+//        try(
+//                Connection conn = DriverManager.getConnection(connectUrl, user,pw);
+//                Statement statement = conn.createStatement();
+//                ResultSet resultSet = statement.executeQuery(sql);
+//        )
+//        {
+//            while (resultSet.next())
+//            {
+//                String showId = resultSet.getString("showId");
+//                String type = resultSet.getString("type");
+//                String title = resultSet.getString("title");
+//                String rating = resultSet.getString("rating");
+//                String director = resultSet.getString("director");
+//                String cast = resultSet.getString("cast");
+//
+//
+//                NetflixShow netflixShow = new NetflixShow(showId,type,title,rating,director,cast);
+//
+//
+//                nfShow.add(netflixShow);
+//            }
+//
+//        }catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
+//        return nfShow;
+//    }
 }
