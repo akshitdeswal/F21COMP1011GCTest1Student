@@ -9,6 +9,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.TreeSet;
 
 public class NetflixTableController implements Initializable {
 
@@ -56,19 +57,41 @@ public class NetflixTableController implements Initializable {
         ratingCol.setCellValueFactory(new PropertyValueFactory<>("rating"));
         directorCol.setCellValueFactory(new PropertyValueFactory<>("director"));
         castCol.setCellValueFactory(new PropertyValueFactory<>("cast"));
-        tableView.getItems().addAll(DBUtility.getNetflixData());
-        selectRatingComboBox.getItems().addAll(DBUtility.getCombos());
-        numOfShowsLabel.setText(String.format("Number of movies/shows : %d", DBUtility.getCount()));
+        tableView.getItems().addAll(DBUtility.getNetflixData("All", "All Rating"));
+        selectRatingComboBox.getItems().addAll(getCombos());
+        updateNumberLabel();
+    }
+
+    private TreeSet<String> getCombos(){
+        TreeSet<String> ratings = new TreeSet<String>();
+
+        for(NetflixShow show : tableView.getItems()) {
+            ratings.add(show.getRating());
+        }
+        return ratings;
+    }
+
+    private void updateNumberLabel(){
+        numOfShowsLabel.setText(String.format("Number of movies/shows : %d",+ tableView.getItems().size()));
     }
 
     @FXML
     void applyFilter(ActionEvent event)  {
+        tableView.getItems().clear();
 
-        if(movieCheckBox.isSelected()){
-            tableView.getItems().addAll(DBUtility.typeMovie());
+        String currentRating = selectRatingComboBox.getSelectionModel().getSelectedItem();
+        if (selectRatingComboBox.getSelectionModel().getSelectedItem() == null)
+             currentRating = "All ratings";
+
+        if(movieCheckBox.isSelected() && !tvCheckBox.isSelected() ){
+            tableView.getItems().addAll(DBUtility.getNetflixData("TV Show", currentRating));
+
         }
-        if(tvCheckBox.isSelected()){
-            tableView.getItems().addAll(DBUtility.typeTV());
+        else if(tvCheckBox.isSelected() && !movieCheckBox.isSelected() ){
+            tableView.getItems().addAll(DBUtility.getNetflixData("Movie", currentRating));
         }
+
+
+        updateNumberLabel();
     }
 }

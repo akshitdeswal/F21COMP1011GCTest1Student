@@ -29,13 +29,13 @@
                 </TableView>
             </center>
             <top>
-                <Label text="NetFlix" BorderPane.alignment="CENTER" />
+                <Label id="header" text="NetFlix" BorderPane.alignment="CENTER" />
             </top>
             <bottom>
                 <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0" BorderPane.alignment="CENTER">
                     <children>
-                        <CheckBox fx:id="movieCheckBox" mnemonicParsing="false" onAction="#applyFilter" text="Movie" />
-                        <CheckBox fx:id="tvCheckBox" mnemonicParsing="false" onAction="#applyFilter" text="TV" />
+                        <CheckBox id="label" fx:id="movieCheckBox" mnemonicParsing="false" onAction="#applyFilter" text="Movie" />
+                        <CheckBox id="label" fx:id="tvCheckBox" mnemonicParsing="false" onAction="#applyFilter" text="TV" />
                         <ComboBox fx:id="selectRatingComboBox" layoutX="333.0" layoutY="30.0" onAction="#applyFilter" promptText="Select Rating" />
                         <Label id="label" fx:id="numOfShowsLabel" text="Number of movies /shows:" />
                     </children>
